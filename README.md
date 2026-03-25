@@ -1,7 +1,6 @@
 # EcoTwin-Hackathon
 # 🌍 EcoLens AI: Your Sustainability Digital Twin
 
-**Built for ET GenAI Hackathon 2026 - Phase 2**
 
 EcoLens AI is a Generative AI-powered "What-If" engine that simulates your personal environmental impact over a 5-year horizon. Unlike static carbon calculators, EcoLens uses **Behavioral Digital Twin** logic to project future ecological outcomes based on current lifestyle choices.
 
