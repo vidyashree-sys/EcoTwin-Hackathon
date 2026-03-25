@@ -84,3 +84,58 @@
 .high { background-color: #22c55e; } /* Green */
 .medium { background-color: #eab308; } /* Yellow */
 .low { background-color: #ef4444; } /* Red */
+
+
+.layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  max-height: 85vh;
+  overflow-y: auto;
+  min-width: 250px;
+}
+
+.mainContent {
+  flex: 2.5;
+}
+
+.historyCard {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #22c55e;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.historyDate {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: block;
+}
+
+.historyLocation {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.historyBody p {
+  font-size: 0.8rem;
+  color: #475569;
+  margin: 5px 0 0 0;
+}
+
+@media (max-width: 768px) {
+  .layout { flex-direction: column; }
+  .sidebar { width: 100%; order: 2; }
+  .mainContent { order: 1; }
+}
