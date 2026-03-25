@@ -139,3 +139,25 @@
   .sidebar { width: 100%; order: 2; }
   .mainContent { order: 1; }
 }
+
+.insightCard {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #d1fae5;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.insightHeader {
+  font-weight: bold;
+  color: #065f46;
+  margin-top: 15px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.insightLine {
+  color: #374151;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}

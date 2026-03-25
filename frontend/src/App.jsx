@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'; // Added useEffect
+import { useState, useEffect } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import styles from './App.module.css';
 
@@ -16,14 +16,12 @@ function App() {
   const [city, setCity] = useState('Bengaluru'); 
   const [customCity, setCustomCity] = useState('');
 
-  // --- PERMANENT MEMORY LOGIC ---
-  // 1. Load from localStorage when the app starts
+  // Permanent Memory Logic
   const [history, setHistory] = useState(() => {
     const saved = localStorage.getItem('ecoLensHistory');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // 2. Save to localStorage every time 'history' changes
   useEffect(() => {
     localStorage.setItem('ecoLensHistory', JSON.stringify(history));
   }, [history]);
@@ -39,15 +37,21 @@ function App() {
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
       
+      // DAY 3 UPGRADED PROMPT: Focuses on "What-If" Simulations and Greenwashing
       const prompt = `
-        You are the EcoLens AI Sustainability Twin for the region: ${locationToAnalyze}. 
+        You are the EcoLens AI Sustainability Twin for the region: ${locationToAnalyze}.
         Analyze this user profile:
         - Daily Habits: ${habit}
         - Transport: ${transport}
 
         Provide a response in exactly this format:
         Score: [A number 0-100]
-        Simulation: [Provide a brief "What-If" scenario for their future carbon footprint in ${locationToAnalyze} and one specific green tip]
+        
+        Current Path (5-Year Outlook): [Describe the environmental impact if these habits continue in ${locationToAnalyze}]
+        
+        Optimized Path (The Reward): [Describe the positive change if the user adopts ONE specific local habit]
+        
+        Expert Insight: [Identify if any of the user's habits are 'Greenwashing' or actually inefficient]
       `;
 
       const result = await model.generateContent(prompt);
@@ -56,12 +60,10 @@ function App() {
       
       setAiResponse(text);
 
-      // Extract Score
       const scoreMatch = text.match(/Score:\s*(\d+)/);
       const currentScore = scoreMatch ? parseInt(scoreMatch[1]) : 0;
       setScore(currentScore);
 
-      // Add to History
       const newEntry = {
         id: Date.now(),
         location: locationToAnalyze,
@@ -94,7 +96,7 @@ function App() {
       <main>
         <form className={styles.form} onSubmit={handleSubmit}>
           
-          <label className={styles.label}>Select Your Region:</label>
+          <label className={styles.label}>Location Context:</label>
           <select 
             className={styles.select} 
             value={city} 
@@ -118,10 +120,10 @@ function App() {
             />
           )}
 
-          <label className={styles.label}>Describe your lifestyle habits:</label>
+          <label className={styles.label}>Daily Habits & Lifestyle:</label>
           <textarea 
             className={styles.input}
-            placeholder="e.g., I use solar power and walk to the market."
+            placeholder="e.g., I drink bottled water, use a petrol scooter, and compost waste."
             value={habit}
             onChange={(e) => setHabit(e.target.value)}
             required
@@ -141,7 +143,7 @@ function App() {
           </select>
 
           <button type="submit" className={styles.button} disabled={loading}>
-            {loading ? "Simulating Twin..." : "Generate AI Simulation"}
+            {loading ? "Running Simulation..." : "Sync My Digital Twin"}
           </button>
         </form>
 
@@ -161,38 +163,44 @@ function App() {
             )}
             
             <div className={styles.aiText}>
-              <h4>Insights for {city === 'Other' ? customCity : city}:</h4>
-              <p style={{ whiteSpace: 'pre-wrap' }}>
-                {aiResponse.replace(/Score:\s*\d+/, '').trim()}
-              </p>
+              <h4>EcoLens Twin Analysis for {city === 'Other' ? customCity : city}:</h4>
+              <div className={styles.insightCard}>
+                {/* Logic to format the AI text into structured blocks */}
+                {aiResponse.replace(/Score:\s*\d+/, '').trim().split('\n').map((line, index) => (
+                  <p key={index} className={line.includes(':') ? styles.insightHeader : styles.insightLine}>
+                    {line}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
         )}
 
         {/* Persistent History List */}
         {history.length > 0 && (
-          <div className={styles.historySection} style={{ marginTop: '30px', borderTop: '1px solid #ddd', paddingTop: '20px' }}>
-            <h3>Your Recent Simulations (Saved)</h3>
+          <div className={styles.historySection} style={{ marginTop: '40px', borderTop: '2px solid #eee', paddingTop: '20px' }}>
+            <h3>Your Twin's Timeline (History)</h3>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               {history.map(item => (
-                <div key={item.id} style={{ background: '#f0fdf4', padding: '10px', borderRadius: '8px', border: '1px solid #bbf7d0', fontSize: '0.8rem' }}>
-                  <strong>{item.location}</strong>: {item.score}% <br/>
-                  <small>{item.date}</small>
+                <div key={item.id} style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0', minWidth: '150px' }}>
+                  <strong>{item.location}</strong><br/>
+                  <span style={{color: '#059669', fontWeight: 'bold'}}>{item.score}% Score</span><br/>
+                  <small style={{color: '#94a3b8'}}>{item.date}</small>
                 </div>
               ))}
             </div>
             <button 
               onClick={() => {setHistory([]); localStorage.removeItem('ecoLensHistory');}}
-              style={{marginTop: '10px', fontSize: '0.7rem', color: 'red', border: 'none', background: 'none', cursor: 'pointer'}}
+              style={{marginTop: '15px', fontSize: '0.75rem', color: '#ef4444', border: 'none', background: 'none', cursor: 'pointer', textDecoration: 'underline'}}
             >
-              Clear All History
+              Reset History
             </button>
           </div>
         )}
       </main>
 
-      <footer style={{ marginTop: '40px', fontSize: '0.8rem', color: '#666' }}>
-        Built for ET GenAI Hackathon 2026 Phase 2
+      <footer style={{ marginTop: '50px', fontSize: '0.8rem', color: '#94a3b8', textAlign: 'center' }}>
+        EcoLens AI • GenAI Hackathon Phase 2 • 2026
       </footer>
     </div>
   );
