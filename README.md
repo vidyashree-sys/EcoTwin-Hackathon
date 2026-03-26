@@ -5,8 +5,8 @@
 ---
 
 ## 🚀 Live Demo
-**Check out the live project here:** 
-eco-twin-hackathon-git-main-vidyashree-sys-projects.vercel.app
+**Check out the live project here:** https://eco-twin-hackathon-git-main-vidyashree-sys-projects.vercel.app/
+
 
 ---
 
@@ -30,9 +30,11 @@ EcoLens AI is a Generative AI-powered "What-If" engine that simulates a user's e
 ---
 ## 📸 Interface Preview
 
-![The Form](image.png)
+<img width="1877" height="951" alt="Screenshot 2026-03-26 203818" src="https://github.com/user-attachments/assets/df98902f-a276-43d3-a629-84a2c383c799" />
 
-![The Result](image-1.png)
+
+<img width="1878" height="947" alt="image" src="https://github.com/user-attachments/assets/070317e5-85fc-41d7-869f-97598a9ceb11" />
+
 
 *Visualizing the 5-Year Environmental Outlook and Sustainability Score.*
 ---
