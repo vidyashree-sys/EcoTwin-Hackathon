@@ -5,8 +5,7 @@
 ---
 
 ## 🚀 Live Demo
-**Check out the live project here:** 
-eco-twin-hackathon-git-main-vidyashree-sys-projects.vercel.app
+Check out the live project here:https://eco-twin-hackathon-git-main-vidyashree-sys-projects.vercel.app/
 
 ---
 
